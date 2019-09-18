@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .view {
+            width: 100%;
+            height: 340px;
+            position: relative;
+        }
+
+        .box {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .box a {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left:0;top:0;
+        }
+
+        .box a:nth-child(1) {
+            background: url(img/1.jpg) no-repeat center;
+        }
+
+        .box a:nth-child(2) {
+            background: url(img/2.jpg) no-repeat center;
+        }
+
+        .box a:nth-child(3) {
+            background: url(img/3.jpg) no-repeat center;
+        }
+
+        .box a:nth-child(4) {
+            background: url(img/4.jpg) no-repeat center;
+        }
+
+        .btns {
+            position: absolute;
+            right: 200px;
+            bottom: 20px;
+            width: 200px;
+            height: 30px;
+            z-index: 999;
+        }
+
+        .btns .btn {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            margin: 0 15px;
+            box-shadow: 0 0 5px #000;
+            cursor: pointer;
+        }
+    </style>
+    <script src="animate.js"></script>
+    <script>
+        /*
+        * 轮播图   选项卡
+        *
+        * 1. 同类的代码都放在一起
+        * 
+        * 2. 按需写代码
+        *
+        *
+        * */
+        window.onload = function () {
+            var box = document.querySelector(".box");
+            var lists=document.querySelectorAll(".box a")
+            var view = document.querySelector(".view");
+            var btns = document.querySelectorAll(".btns .btn");
+
+            var clientW = document.documentElement.clientWidth;
+            var num = 0
+
+            function move() {
+                num++
+
+                if(num>3){
+                    num=0
+                }
+
+                for(var i=0;i<lists.length;i++){
+                    lists[i].style.opacity=0
+                }
+                animate(lists[num], {
+                    opacity: 1
+                })
+
+
+
+                for (var i = 0; i < btns.length; i++) {
+                    btns[i].style.background = ""
+                }
+                btns[num].style.background = "red"
+            }
+
+            var t = setInterval(move, 2000)
+            view.onmouseover = function () {
+                clearInterval(t)
+            }
+
+            view.onmouseout = function () {
+                t = setInterval(move, 2000)
+            }
+
+
+            for (let i = 0; i < btns.length; i++) {
+
+                    btns[i].onclick =function () {
+                        num=i
+                        for(var j=0;j<lists.length;j++){
+                            lists[j].style.opacity=0
+                        }
+                        animate(lists[num], {
+                            opacity: 1
+                        })
+
+                        for (var j = 0; j < btns.length; j++) {
+                            btns[j].style.background = ""
+                        }
+                        btns[num].style.background = "red"
+
+                    }
+            }
+
+        }
+
+
+
+        // 在屏幕失去焦点的时候，里面的内容是不实时渲染
+        //  es6
+        // setInterval(function () {
+        //    
+        // },30)
+
+
+
+
+        
+        
+        
+
+
+
+
+    </script>
+</head>
+<body>
+<div class="view">
+    <div class="box">
+        <a href="" style="z-index:1"></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </div>
+    <div class="btns">
+        <div class="btn" style="background: red"></div>
+        <div class="btn"></div>
+        <div class="btn"></div>
+        <div class="btn"></div>
+    </div>
+
+</div>
+</body>
+</html>
